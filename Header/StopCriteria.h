@@ -33,6 +33,7 @@ public:
 	 * \return True if the optimization should be stopped, false otherwise.
 	 */
 	virtual bool check(TransferData &data) const = 0;
+	virtual std::string getName() const = 0;
 
 protected:
 	size_t max_iter; ///< The maximum number of iterations allowed.
@@ -51,6 +52,7 @@ public:
 	GradNormStopCriteria(double eps, size_t max_iter);
 	~GradNormStopCriteria();
 	virtual bool check(TransferData &data) const override;
+	virtual std::string getName() const override;
 
 private:
 };
@@ -67,6 +69,7 @@ public:
 	DifferenceNormStopCriteria(double eps, size_t max_iter);
 	~DifferenceNormStopCriteria();
 	virtual bool check(TransferData &data) const override;
+	virtual std::string getName() const override;
 
 private:
 };
@@ -83,6 +86,7 @@ public:
 	FuncDifferenceNormStopCriteria(double eps, size_t max_iter);
 	~FuncDifferenceNormStopCriteria();
 	virtual bool check(TransferData &data) const override;
+	virtual std::string getName() const override;
 
 private:
 };

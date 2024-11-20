@@ -14,7 +14,7 @@
 class OptimizationMethod
 {
 public:
-	OptimizationMethod(const VectorX &startPoint);
+	OptimizationMethod();
 	virtual ~OptimizationMethod();
 	/**
 	 * \brief Optimizes the given function within the specified area.
@@ -22,7 +22,7 @@ public:
 	 * \param f The function to be optimized.
 	 * \param criteria The stopping criteria for the optimization.
 	 */
-	virtual void optimise(Area &area, const Function &f, const StopCriteria &criteria) = 0;
+	virtual void optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria) = 0;
 	/**
 	 * \brief Retrieves the name of the optimization method.
 	 * \return A string representing the name of the optimization method.
@@ -60,15 +60,14 @@ public:
 	 *
 	 * Initializes the Adam optimizer with specified parameters.
 	 *
-	 * \param startPoint The starting point for the optimization as a VectorX.
 	 * \param alpha The learning rate.
 	 * \param beta1 The exponential decay rate for the first moment estimates.
 	 * \param beta2 The exponential decay rate for the second moment estimates.
 	 * \param epsilon A small constant to prevent division by zero.
 	 */
-	AdamGradientDescent(const VectorX &startPoint, double alpha, double beta1, double beta2, double epsilon);
+	AdamGradientDescent(double alpha, double beta1, double beta2, double epsilon);
 	~AdamGradientDescent();
-	virtual void optimise(Area &area, const Function &f, const StopCriteria &criteria) override;
+	virtual void optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria) override;
 	virtual std::string getName() override;
 
 private:
@@ -92,14 +91,13 @@ public:
 	 *
 	 * Initializes the random search optimizer with specified parameters.
 	 *
-	 * \param startPoint The starting point for the optimization as a VectorX.
 	 * \param alpha The scaling factor for search steps.
 	 * \param p The probability of selecting the entire area to generate a random point.
 	 * \param delta Radius of the neighborhood.
 	 */
-	RandomSearch(const VectorX startPoint, double alpha, double p, double delta);
+	RandomSearch(double alpha, double p, double delta);
 	~RandomSearch();
-	virtual void optimise(Area &area, const Function &f, const StopCriteria &criteria) override;
+	virtual void optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria) override;
 	virtual std::string getName() override;
 
 private:
@@ -123,11 +121,10 @@ public:
 	 *
 	 * Initializes the classic gradient descent optimizer with a starting point.
 	 *
-	 * \param startPoint The starting point for the optimization as a VectorX.
 	 */
-	ClassicGradientDescent(const VectorX &startPoint);
+	ClassicGradientDescent();
 	~ClassicGradientDescent();
-	virtual void optimise(Area &area, const Function &f, const StopCriteria &criteria) override;
+	virtual void optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria) override;
 	virtual std::string getName() override;
 
 private:

@@ -1,8 +1,7 @@
 ﻿#include "OptimizationMethod.h"
 
-OptimizationMethod::OptimizationMethod(const VectorX &startPoint) : iterMade(0)
+OptimizationMethod::OptimizationMethod() : iterMade(0)
 {
-	points.push_back(startPoint);
 }
 
 OptimizationMethod::~OptimizationMethod()
@@ -19,8 +18,8 @@ size_t OptimizationMethod::getIterNum()
 	return iterMade;
 }
 
-AdamGradientDescent::AdamGradientDescent(const VectorX &startPoint, double alpha, double beta1, double beta2, double epsilon)
-	: OptimizationMethod(startPoint), alpha(alpha), beta1(beta1), beta2(beta2), epsilon(epsilon)
+AdamGradientDescent::AdamGradientDescent(double alpha, double beta1, double beta2, double epsilon)
+	: OptimizationMethod(), alpha(alpha), beta1(beta1), beta2(beta2), epsilon(epsilon)
 {
 }
 
@@ -28,7 +27,7 @@ AdamGradientDescent::~AdamGradientDescent()
 {
 }
 
-RandomSearch::RandomSearch(const VectorX startPoint, double alpha, double p, double delta) : OptimizationMethod(startPoint), alpha(alpha), p(p), delta(delta), gen(228)
+RandomSearch::RandomSearch(double alpha, double p, double delta) : OptimizationMethod(), alpha(alpha), p(p), delta(delta), gen(228)
 {
 }
 
@@ -36,7 +35,7 @@ RandomSearch::~RandomSearch()
 {
 }
 
-ClassicGradientDescent::ClassicGradientDescent(const VectorX &startPoint) : OptimizationMethod(startPoint), alpha(0)
+ClassicGradientDescent::ClassicGradientDescent() : OptimizationMethod(), alpha(0)
 {
 }
 
@@ -44,8 +43,9 @@ ClassicGradientDescent::~ClassicGradientDescent()
 {
 }
 
-void AdamGradientDescent::optimise(Area &area, const Function &f, const StopCriteria &criteria)
+void AdamGradientDescent::optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria)
 {
+	points.push_back(startPoint);
 	size_t t = 0;
 	size_t dim = f.getDim();
 	VectorX nextPoint(dim, 0.0);
@@ -111,8 +111,9 @@ std::string AdamGradientDescent::getName()
 	return "AdamGradientDescent";
 }
 
-void RandomSearch::optimise(Area &area, const Function &f, const StopCriteria &criteria)
+void RandomSearch::optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria)
 {
+	points.push_back(startPoint);
 	size_t dim = f.getDim();
 	std::uniform_real_distribution<> _p(0, 1);
 	Area areaIntersected;
@@ -193,8 +194,9 @@ double ClassicGradientDescent::getMaxAlpha(Area &area, const Function &func, con
 	return alphaMax;
 }
 
-void ClassicGradientDescent::optimise(Area &area, const Function &f, const StopCriteria &criteria)
+void ClassicGradientDescent::optimise(const VectorX &startPoint, Area &area, const Function &f, const StopCriteria &criteria)
 {
+	points.push_back(startPoint);
 	size_t dim = f.getDim();
 	VectorX nextPoint(dim, 0.0);
 	TransferData data;

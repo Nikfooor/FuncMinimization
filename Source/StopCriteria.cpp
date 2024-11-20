@@ -37,6 +37,11 @@ bool GradNormStopCriteria::check(TransferData &data) const
 	return data.getIterNum() >= max_iter || norm(data.getFunc()->grad(data.getCurrPoint())) < eps && data.getPoints()->size() != 1;
 }
 
+std::string GradNormStopCriteria::getName() const
+{
+	return "Gradient norm stop criteria";
+}
+
 bool DifferenceNormStopCriteria::check(TransferData &data) const
 {
 
@@ -45,10 +50,20 @@ bool DifferenceNormStopCriteria::check(TransferData &data) const
 	return data.getIterNum() >= max_iter || norm(data.getCurrPoint() - data.getPrevPoint()) < eps;
 }
 
+std::string DifferenceNormStopCriteria::getName() const
+{
+	return "Difference norm stop criteria";
+}
+
 bool FuncDifferenceNormStopCriteria::check(TransferData &data) const
 {
 	if (data.getPoints()->size() == 1)
 		return false;
 	std::shared_ptr<Function> f = data.getFunc();
 	return data.getIterNum() >= max_iter || std::abs(((*f)(data.getCurrPoint()) - (*f)(data.getPrevPoint())) / (*f)(data.getCurrPoint())) < eps;
+}
+
+std::string FuncDifferenceNormStopCriteria::getName() const
+{
+	return "Function difference norm stop criteria";
 }
