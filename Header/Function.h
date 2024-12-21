@@ -105,3 +105,48 @@ public:
 	virtual VectorX grad(const VectorX &x) const override;
 	virtual std::shared_ptr<Function> clone() const override;
 };
+
+class Function4 : public Function
+{
+
+public:
+	Function4()
+	{
+		dimension = 2;
+		name = "(1 - x)^2 + 100(y - x^2)^2";
+	}
+	virtual ~Function4() {};
+	virtual double operator()(const VectorX &x) const override;
+	virtual VectorX grad(const VectorX &x) const override;
+	virtual std::shared_ptr<Function> clone() const override;
+};
+
+class Function5 : public Function
+{
+
+public:
+	Function5()
+	{
+		dimension = 4;
+		name = "100(x^2 - y)^2 + (x - 1)^2 + 100(z^2 - w)^2 + (z - 1)^2";
+	}
+	virtual ~Function5() {};
+	virtual double operator()(const VectorX &x) const override;
+	virtual VectorX grad(const VectorX &x) const override;
+	virtual std::shared_ptr<Function> clone() const override;
+};
+
+class Function6 : public Function
+{
+
+public:
+	Function6()
+	{
+		dimension = 2;
+		name = "x^2 + y^2";
+	}
+	virtual ~Function6() {};
+	virtual double operator()(const VectorX &x) const override;
+	virtual VectorX grad(const VectorX &x) const override;
+	virtual std::shared_ptr<Function> clone() const override;
+};

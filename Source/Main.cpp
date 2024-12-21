@@ -89,12 +89,18 @@ std::shared_ptr<Function> chooseFunction()
 	Function1 func1;
 	Function2 func2;
 	Function3 func3;
+	Function4 func4;
+	Function5 func5;
+	Function6 func6;
 
 	cout << "1. " << func1.getName() << ": dim = " << func1.getDim() << endl;
 	cout << "2. " << func2.getName() << ": dim = " << func2.getDim() << endl;
 	cout << "3. " << func3.getName() << ": dim = " << func3.getDim() << endl;
+	cout << "4. " << func4.getName() << ": dim = " << func4.getDim() << endl;
+	cout << "5. " << func5.getName() << ": dim = " << func5.getDim() << endl;
+	cout << "6. " << func6.getName() << ": dim = " << func6.getDim() << endl;
 
-	int funcChoice = safeInputInt("Your choice: ", 1, 3);
+	int funcChoice = safeInputInt("Your choice: ", 1, 6);
 
 	switch (funcChoice)
 	{
@@ -104,6 +110,12 @@ std::shared_ptr<Function> chooseFunction()
 		return std::make_shared<Function2>();
 	case 3:
 		return std::make_shared<Function3>();
+	case 4:
+		return std::make_shared<Function4>();
+	case 5:
+		return std::make_shared<Function5>();
+	case 6:
+		return std::make_shared<Function6>();
 	default:
 		cout << "Incorrect function selection." << endl;
 	}

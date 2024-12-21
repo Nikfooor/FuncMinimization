@@ -158,16 +158,17 @@ std::string RandomSearch::getName()
 
 double ClassicGradientDescent::alphaOptimization(const Function &func, const VectorX &point, const double maxAlpha)
 {
-	double eps = 1e-10;
+	double eps = 1e-15;
 	double l = 0;
 	double r = maxAlpha;
 	double lNext, rNext;
+	size_t maxIter = 100;
 	VectorX grad = func.grad(point);
 	auto g = [&func, &point, &grad](double alpha) -> double
 	{
 		return func(point - alpha * grad);
 	};
-	for (int i = 0; r - l > eps; ++i)
+	for (int i = 0; (r - l > eps) && (i < maxIter); ++i)
 	{
 		lNext = (2 * l + r) / 3;
 		rNext = (l + 2 * r) / 3;
